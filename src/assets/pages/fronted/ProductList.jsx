@@ -7,17 +7,17 @@ export default function(){
     const apiPath = import.meta.env.VITE_API_PATH;
     const [ productList , setProductList ] = useState([]);
 
-    const getProductList = async()=> {
-        try {
-            const res = await axios.get(`${apiUrl}${apiSub}${apiPath}/products/all`)
-            setProductList(res.data.products);
-            // console.log(limitData);
+    // const getProductList = async()=> {
+    //     try {
+    //         const res = await axios.get(`${apiUrl}${apiSub}${apiPath}/products/all`)
+    //         setProductList(res.data.products);
+    //         // console.log(limitData);
             
-        } catch (error) {
-            console.log(error);
+    //     } catch (error) {
+    //         console.log(error);
             
-        }
-    }
+    //     }
+    // }
 
     const getCartData = async()=>{
         try {
@@ -30,23 +30,44 @@ export default function(){
         }
     }
     useEffect(()=>{
-        getProductList();
-        // postNewCart();
+        const getProductList = (async()=> {
+            try {
+                const res = await axios.get(`${apiUrl}${apiSub}${apiPath}/products/all`)
+                setProductList(res.data.products);
+                // console.log(limitData);
+                
+            } catch (error) {
+                console.log(error);
+                
+            }
+        })()
     },[])
 
     const [ cart , setCart ] = useState([]);
+    const [ isAddingCheck, setIsAddCheck ] = useState(false);
     const postNewCart = async(productId)=>{
+        if(isAddingCheck) return;
         const param = {
             "data" :{
                 "product_id": productId,
                 "qty": 1
             }
         }
+        setIsAddCheck(true);
+        
         try {
-            // const res = await axios.post(`${apiUrl}${apiSub}${apiPath}/cart`,param)
-            // getCartData();
-        } catch (error) {
+            const res = await axios.post(`${apiUrl}${apiSub}${apiPath}/cart`,param)
+            console.log(res.data);
+            if (res.data.success) {
+                alert(res.data.message); // 或使用 SweetAlert2
+                // getCartData(); // 2. 成功後刷新購物車列表
+            }
             
+
+        } catch (error) {
+            alert(error.response?.data?.message);
+        } finally {
+            setIsAddCheck(false);     // 無論成功或失敗都結束 Loading
         }
     }
     useEffect(()=>{
@@ -55,39 +76,51 @@ export default function(){
 
     return <>
         <section className="py-3">
-            <div className="row row-cols-4 mb-4">
-                {
-                    productList.map((item)=>{
-                        return (
-                            <div className="col" key={item.id}>
-                                <div to={`/productlist/${item.id}`}
-                                    className="card border-0 rounded-3 bg-light" >
-                                    <Link to={`/productlist/${item.id}`}
-                                        className="text-decoration-none">
-                                        <img src={item.imageUrl} 
-                                            alt={item.title} 
-                                            className="rounded-top-3 w-100 object-fit-cover"
-                                            style={{height:'200px'}} />
-                                        <div className="card-body">
-                                            <p className="card-title h5 fw-bold text-dark ">
-                                                {item.title}
-                                            </p>
-                                            <p className="text-danger text-end m-0">${item.price}</p>
+            <div className="row">
+                <div className="col">
+                    <div className="row row-cols-4 mb-4">
+                        {
+                            productList.map((item)=>{
+                                return (
+                                    <div className="col" key={item.id}>
+                                        <div 
+                                            className="card border-0 rounded-3 bg-light" >
+                                            <Link to={`/productlist/${item.id}`}
+                                                className="text-decoration-none">
+                                                <img src={item.imageUrl} 
+                                                    alt={item.title} 
+                                                    className="rounded-top-3 w-100 object-fit-cover"
+                                                    style={{height:'200px'}} />
+                                                <div className="card-body">
+                                                    <p className="card-title h5 fw-bold text-dark ">
+                                                        {item.title}
+                                                    </p>
+                                                    <p className="text-danger text-end m-0">${item.price}</p>
+                                                </div>
+                                            </Link>
+                                            <div className="p-2">
+                                                <button type="button"
+                                                    className="btn btn-primary w-100 fw-bold"
+                                                    onClick={()=>postNewCart(item.id)}>
+                                                    加入購物車
+                                                </button>
+                                            </div>
                                         </div>
-                                    </Link>
-                                    <div className="p-2">
-                                        <button type="button"
-                                            className="btn btn-primary w-100 fw-bold"
-                                            onClick={postNewCart(item.id)}>
-                                            加入購物車
-                                        </button>
                                     </div>
-                                </div>
+                                )
+                            })
+                        }
+                        
+                    </div>
+                </div>
+                <div className="col-2">
+                        <div>
+                            <div className="card">
+                                <h5>狗狗的毛絨玩偶</h5>
+                                <p>$1500</p>
                             </div>
-                        )
-                    })
-                }
-                
+                        </div>
+                </div>
             </div>
         </section>
         {/* <section>

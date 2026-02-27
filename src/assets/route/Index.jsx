@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import FrontedLayout from "../pages/fronted/FrontedLayout";
 import ProductList from "../pages/fronted/ProductList";
 import ProductDetail from "../pages/fronted/ProductDetail";
+import Cart from "../pages/fronted/Cart";
 import AdminLayout from "../pages/admin/AdminLayout";
 import AdminProducts from "../pages/admin/AdminProducts";
 
@@ -32,9 +33,14 @@ const routes = [
                     {
                         path: ':id',
                         element: <ProductDetail />
-                    }
+                    },
                 ]
             },
+            {
+                path: 'cart',
+                element: <Cart/>
+            },
+
             {
                 path: '/admin',
                 element: <AdminLayout/>,

@@ -24,8 +24,13 @@ export default function Header(params) {
                     </NavLink>
                     </li>
                     <li className="nav-item">
-                    <NavLink to="/productlist" className="nav-link" href="#">
+                    <NavLink to="/productlist" className="nav-link">
                         商品列表
+                    </NavLink>
+                    </li>
+                    <li className="nav-item">
+                    <NavLink to="/cart" className="nav-link">
+                        購物車
                     </NavLink>
                     </li>
                 </ul>
