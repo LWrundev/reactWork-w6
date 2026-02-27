@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom"
 
 export default function Header(params) {
     return <>
-        <header>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <header className="bg-body-tertiary">
+            <nav className="container navbar navbar-expand-lg ">
             <div className="container-fluid">
                 <button
                 className="navbar-toggler"
@@ -24,13 +24,13 @@ export default function Header(params) {
                     </NavLink>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" href="#">
-                        Link
-                    </a>
+                    <NavLink to="/productlist" className="nav-link" href="#">
+                        商品列表
+                    </NavLink>
                     </li>
                 </ul>
                 <div>
-                    <NavLink to='/login'className="btn btn-info text-light fw-bold w-100" >
+                    <NavLink to='/admin'className="btn btn-info text-light fw-bold w-100" >
                         管理頁面
                     </NavLink>
                 </div>
