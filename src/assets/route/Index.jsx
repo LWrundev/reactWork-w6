@@ -6,6 +6,9 @@ import FrontedLayout from "../pages/fronted/FrontedLayout";
 import ProductList from "../pages/fronted/ProductList";
 import ProductDetail from "../pages/fronted/ProductDetail";
 import Cart from "../pages/fronted/Cart";
+import OrderLayout from "../pages/fronted/OrderLayout";
+import OrderList from "../pages/fronted/OrderList";
+import OrderDetail from "../pages/fronted/OrderDetail";
 import AdminLayout from "../pages/admin/AdminLayout";
 import AdminProducts from "../pages/admin/AdminProducts";
 
@@ -39,6 +42,20 @@ const routes = [
             {
                 path: 'cart',
                 element: <Cart/>
+            },
+            {
+                path: 'order',
+                element: <OrderLayout/>,
+                children: [
+                    {
+                        index: true,
+                        element: <OrderList/>
+                    },
+                    {
+                        path:':id',
+                        element: <OrderDetail />
+                    }
+                ]
             },
 
             {

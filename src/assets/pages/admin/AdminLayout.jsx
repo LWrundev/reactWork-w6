@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_BASE;
@@ -7,7 +7,7 @@ const apiSub = import.meta.env.VITE_API_SUB ;
 
 export default function AdminLayout(params) {
     const navigate = useNavigate();
-    
+    const [isAuth,setIsAuth]= useState(false);
     const checkLogin = async()=>{
         try {
             const res = await axios.post(`${apiUrl}${apiSub}user/check`);
@@ -34,6 +34,7 @@ export default function AdminLayout(params) {
         axios.defaults.headers.common["Authorization"] = token;
     // 4. 呼叫 Check API 檢查 Token 有效性
         checkLogin();
+        setIsAuth(true);
     },[navigate])
     
 
@@ -50,7 +51,10 @@ export default function AdminLayout(params) {
                 </nav>
             </div>
             <div className="col-10">
-                <Outlet />
+                {
+                    isAuth && <Outlet />
+                }
+                
             </div>
         </div>
     </>

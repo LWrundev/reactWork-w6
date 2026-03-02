@@ -1,5 +1,5 @@
 
-export default function ImagesArrayInput({ control, register, watch, errors, rule }) {
+export default function ImagesArrayInput({ control, register, watch, errors, rule,useFieldArray }) {
     const { fields, append, remove } = useFieldArray({
         control,
         name: "imagesUrl"

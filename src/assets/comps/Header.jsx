@@ -33,6 +33,11 @@ export default function Header(params) {
                         購物車
                     </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/order" className="nav-link">
+                        訂單資訊
+                        </NavLink>
+                    </li>
                 </ul>
                 <div>
                     <NavLink to='/admin'className="btn btn-info text-light fw-bold w-100" >
