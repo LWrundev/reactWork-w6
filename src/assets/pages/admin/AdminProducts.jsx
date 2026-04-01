@@ -1,5 +1,6 @@
 import { useState,useEffect,useCallback, useRef } from "react";
 import { useForm,useFieldArray } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Modal } from "bootstrap";
 import axios from "axios";
 import ImagesArrayInput from "../../comps/ImagesArrayInput";
@@ -8,6 +9,9 @@ import InputRadio from "../../comps/InputRadio";
 import InputTextarea from "../../comps/InputTextarea";
 import InputSelect from "../../comps/InputSelect";
 import InputText from "../../comps/InputText";
+import { pushMsg } from "../../slices/messageSlice";
+import MessageToast from "../../comps/MessageToast";
+
 
 function AdminProduct({ data,openModal }) {
     return <>
@@ -75,7 +79,7 @@ export default function Admin() {
         control,
         name: "imagesUrl" // 對應資料結構中的陣列名稱
     });
-
+    const dispatch = useDispatch();
     const apiUrl = import.meta.env.VITE_API_BASE;
     const apiSub = import.meta.env.VITE_API_SUB ;
     const apiPath = import.meta.env.VITE_API_PATH;
@@ -207,13 +211,21 @@ export default function Admin() {
         try {
             const res = await axios[method]( url, { data: postData } );
             if(res.data.success){
-                alert(res.data.message);
                 getProduct();
                 closeModal();
+                dispatch(pushMsg({
+                    type: 'success',
+                    title: isEdit ? '編輯成功' : '新增成功',
+                    text: `商品「${postData.title}」已${isEdit ? '更新' : '建立'}`
+                }));
             }
             
         } catch (error) {
-            alert(error.data?.message);
+            dispatch(pushMsg({
+                type: 'danger',
+                title: isEdit ? '更新失敗' : '新增失敗',
+                text: error.response?.data?.message || '伺服器錯誤'
+            }))
         }
     };
     // DELETE
@@ -222,13 +234,22 @@ export default function Admin() {
             const res= await axios.delete(`${apiUrl}${apiSub}${apiPath}/admin/product/${tempProduct.id}`)
 
             if (res.data.success) {
-                alert(res.data.message);
                 getProduct();
                 closeModal();
+                dispatch(pushMsg({
+                    type: 'success',
+                    title: '刪除成功',
+                    text : `商品已刪除` 
+                }))
             }
 
         } catch (error) {
-            alert(error.data?.message);
+           
+            dispatch(pushMsg({
+                type: 'danger',
+                title: '刪除失敗',
+                text: error.response?.data?.message || '伺服器錯誤'
+            }))
         }
     }
 
