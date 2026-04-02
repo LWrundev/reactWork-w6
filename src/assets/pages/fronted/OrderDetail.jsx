@@ -26,8 +26,6 @@ export default function OrderDetail() {
         const getOrder = async() =>{
             try {
                 const res = await axios.get(`${apiUrl}${apiSub}${apiPath}/order/${id}`)
-                // console.log(res.data.order);
-                // console.log('商品',Object.values(res.data.order.products));
                 
                 setOrderData(res.data.order);
                 
@@ -56,7 +54,6 @@ export default function OrderDetail() {
     const postPay = async()=>{
         try {
             const res =await axios.post(`${apiUrl}${apiSub}${apiPath}/pay/${orderData.id}`)
-            // console.log(res);
             alert(res.data.message)            
         } catch (error) {
             alert(error.data.message)

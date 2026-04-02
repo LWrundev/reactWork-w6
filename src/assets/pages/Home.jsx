@@ -16,10 +16,8 @@ function Home(params) {
             //  只render 4 筆資料
             const limitData = res.data.products.slice(1,5);
             setProductList(limitData);
-            // console.log(limitData);
             
         } catch (error) {
-            console.log(error);
             
         }finally{
             setLoading(false);

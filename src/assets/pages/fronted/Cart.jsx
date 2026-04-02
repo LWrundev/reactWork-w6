@@ -24,7 +24,6 @@ function Cart(params) {
         async()=>{
             try {
                 const res = await axios.get(`${apiUrl}${apiSub}${apiPath}/cart`)
-                console.log('cart',res.data.data);
                 setCartData(res.data.data);
             } catch (error) {
                 

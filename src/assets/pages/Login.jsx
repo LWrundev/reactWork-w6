@@ -24,7 +24,6 @@ const apiPath = import.meta.env.VITE_API_PATH;
     const dispatch = useDispatch();
     //表單送出
     const onSubmit = async(data) =>{
-        console.log('表單',data);
         try {
             const res = await axios.post(`${apiUrl}/v2/admin/signin`,data)
             const {expired,token,uid}=res.data;
@@ -40,7 +39,6 @@ const apiPath = import.meta.env.VITE_API_PATH;
                 title: '登入成功',
                 text: '即將跳轉頁面'
             }))
-            console.log("準備跳轉...");
 
             setTimeout(() => {
                 navigate('/admin');

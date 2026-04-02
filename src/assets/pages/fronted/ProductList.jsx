@@ -12,10 +12,8 @@ export default function(){
             try {
                 const res = await axios.get(`${apiUrl}${apiSub}${apiPath}/products/all`)
                 setProductList(res.data.products);
-                // console.log(limitData);
                 
             } catch (error) {
-                console.log(error);
                 
             }
         })()
@@ -26,7 +24,6 @@ export default function(){
         async()=>{
             try {
                 const res = await axios.get(`${apiUrl}${apiSub}${apiPath}/cart`)
-                console.log('cart',res.data.data);
                 setCartData(res.data.data);
             } catch (error) {
                 
@@ -52,7 +49,6 @@ export default function(){
         
         try {
             const res = await axios.post(`${apiUrl}${apiSub}${apiPath}/cart`,param)
-            console.log(res.data);
             if (res.data.success) {
                 alert(res.data.message); 
                 getCartData(); // 2. 成功後刷新購物車列表

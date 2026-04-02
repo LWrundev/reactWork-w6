@@ -13,7 +13,6 @@ export default function ProductDetail(params) {
     const getSingleProduct = async()=>{
         try {
             const res = await axios.get(`${apiUrl}${apiSub}${apiPath}/product/${id}`)
-            console.log(res.data.product);
             setProduct(res.data.product);
         } catch (error) {
             

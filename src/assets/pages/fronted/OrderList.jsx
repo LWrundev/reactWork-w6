@@ -13,7 +13,6 @@ export default function OrderList(params) {
         const getOrders = async() =>{
             try {
                 const res = await axios.get(`${apiUrl}${apiSub}${apiPath}/orders`)
-                console.log(res.data.orders);
                 setOrdersData(res.data.orders);
             } catch (error) {
                 
